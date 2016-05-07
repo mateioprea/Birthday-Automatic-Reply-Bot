@@ -1,0 +1,15 @@
+{
+  "name": "birthdayautomaticreply",
+  "version": "1.0.0",
+  "description": "Birthday Automatic Reply Bot",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Matei Oprea",
+  "license": "MIT",
+  "dependencies": {
+    "facebook-chat-api": "^1.1.0",
+    "node-cache": "^3.2.1"
+  }
+}
