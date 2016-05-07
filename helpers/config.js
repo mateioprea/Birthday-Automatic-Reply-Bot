@@ -4,7 +4,8 @@ exports.config = function() {
             email: "",
             password: ""
         },
-        wishes: ["Happy Birthday"]
+        wishes: ["Happy Birthday"],
+        reply: ""
     };
     return config;
 }
