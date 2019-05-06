@@ -14,9 +14,26 @@ var parseMessage = function(message) {
     return message.replace(/[^\w\s]|(.)(?=\1)/gi, "");
 };
 
+var rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 
 login({email: config.facebook.email, password: config.facebook.password}, function callback (err, api) {
-    if(err) return console.error(err);
+    if(err) {
+        switch (err.error) {
+            case 'login-approval':
+                console.log('Enter code > ');
+                rl.on('line', function(line) {
+                    err.continue(line);
+                    rl.close();
+                });
+                break;
+            default:
+                console.log(err);
+        }
+        return;
+    }
 
     api.listen(function callback(err, message) {
         if(!message.isGroup) {
@@ -32,7 +49,9 @@ login({email: config.facebook.email, password: config.facebook.password}, functi
                                 myCache.set("user" + message.senderID, true);
                                 replySent = 1;
                                 console.log(new Date(), " Got message: " + messageToParse + "." + " Sent reply: " + config.reply);
-                                api.sendMessage(config.reply, message.threadID);
+                                setTimeout(function() {
+                                    api.sendMessage(config.reply, message.threadID);
+                                }, 3000);
                             }
                         });
                     }
